@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cart – King Sports Kashmir</title>
-  <meta name="description" content="Your shopping cart at King Sports Kashmir. Review your cricket bat order and checkout via WhatsApp.">
-  <meta name="keywords" content="cricket bats Kashmir, Kashmir willow bat, Srinagar cricket shop">
-  <link rel="stylesheet" href="css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Cart – King Sports Kashmir</title>
+<meta name="description" content="Your shopping cart at King Sports Kashmir. Review and checkout via WhatsApp.">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -20,7 +19,7 @@
     <li><a href="shop.html">Shop</a></li>
     <li><a href="about.html">About</a></li>
     <li><a href="contact.html">Contact</a></li>
-    <li><a href="cart.html" class="nav-cart active">🛒 Cart <span class="cart-count" id="cartCount">0</span></a></li>
+    <li><a href="cart.html" class="nav-cart active">🛒 Cart<span class="cart-count" id="cartCount"></span></a></li>
   </ul>
   <button class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></button>
 </nav>
@@ -30,135 +29,99 @@
   <p>Review your order and checkout via WhatsApp</p>
 </div>
 
-<section class="section" style="padding-top:2rem" id="cart-section">
-  <!-- Rendered by JS -->
-</section>
+<section class="section" style="padding-top:2rem" id="cartSection"></section>
 
 <footer>
   <div class="footer-grid">
-    <div>
-      <div class="nav-brand">
-        <div class="brand-crown">👑</div>
-        <div class="brand-name">King Sports <span>Kashmir</span></div>
-      </div>
-      <p class="footer-brand-desc">Premium handcrafted Kashmir Willow cricket bats from Srinagar, J&K.</p>
-    </div>
-    <div>
-      <h4 class="footer-heading">Quick Links</h4>
-      <ul class="footer-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="shop.html">Shop</a></li>
-        <li><a href="about.html">About Us</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
-    </div>
-    <div>
-      <h4 class="footer-heading">Contact</h4>
-      <div class="footer-contact-item">📞 <a href="tel:+917006321949">+91 70063 21949</a></div>
-      <div class="footer-contact-item">✉️ <a href="mailto:kingsportsks844@gmail.com">kingsportsks844@gmail.com</a></div>
-    </div>
+    <div><div class="nav-brand"><div class="brand-crown">👑</div><div class="brand-name">King Sports <span>Kashmir</span></div></div><p class="footer-brand-desc">Premium handcrafted Kashmir Willow cricket bats from Srinagar, J&K.</p></div>
+    <div><h4 class="footer-heading">Quick Links</h4><ul class="footer-links"><li><a href="index.html">Home</a></li><li><a href="shop.html">Shop</a></li><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div><h4 class="footer-heading">Contact</h4><div class="footer-contact-item">📞 <a href="tel:+917006321949">+91 70063 21949</a></div><div class="footer-contact-item">✉️ <a href="mailto:kingsportsks844@gmail.com">kingsportsks844@gmail.com</a></div></div>
   </div>
-  <div class="footer-bottom">
-    <span>© 2024 King Sports Kashmir.</span>
-    <span>Made with ❤️ in Srinagar, J&K</span>
-  </div>
+  <div class="footer-bottom"><span>© 2024 King Sports Kashmir.</span><span>Made with ❤️ in Srinagar, J&K</span></div>
 </footer>
 
-<script type="module">
-import { getCart, removeFromCart, updateQty, clearCart, getCartTotal } from './js/cart.js';
-import { formatPrice, whatsappOrder, imgFallback, updateCartCount } from './js/utils.js';
+<script>
+const CART_KEY='ksk_cart';
+const WA='https://wa.me/917006321949';
+const FB='https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=120&q=80';
 
-function renderCart() {
-  updateCartCount();
-  const cart = getCart();
-  const section = document.getElementById('cart-section');
-
-  if (!cart.length) {
-    section.innerHTML = `
-      <div class="empty-cart">
-        <div class="empty-cart-icon">🛒</div>
-        <h3>Your Cart is Empty</h3>
-        <p>Looks like you haven't added any bats yet.</p>
-        <a href="shop.html" class="btn-primary">Browse Our Collection →</a>
-      </div>
-    `;
-    return;
-  }
-
-  const subtotal = getCartTotal();
-  const delivery = 0;
-  const total = subtotal + delivery;
-
-  section.innerHTML = `
-    <div class="cart-layout">
-      <div class="cart-items" id="cart-items">
-        ${cart.map(item => `
-          <div class="cart-item" data-id="${item.id}">
-            <img src="${item.image || 'https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=120&q=80'}" class="cart-item-img" alt="${item.name}">
-            <div class="cart-item-info">
-              <div class="cart-item-name">${item.name}</div>
-              <div class="cart-item-price">${formatPrice(item.price)}</div>
-              <div class="qty-controls">
-                <button class="qty-btn qty-minus" data-id="${item.id}">−</button>
-                <span class="qty-num">${item.qty}</span>
-                <button class="qty-btn qty-plus" data-id="${item.id}" ${item.qty >= item.stock ? 'disabled style="opacity:0.4"' : ''}>+</button>
-                <span style="color:var(--muted);font-size:0.8rem;margin-left:0.5rem">= ${formatPrice(item.price * item.qty)}</span>
-              </div>
-            </div>
-            <button class="cart-item-remove" data-id="${item.id}" title="Remove">🗑</button>
-          </div>
-        `).join('')}
-        <div style="margin-top:1rem; display:flex; gap:1rem">
-          <a href="shop.html" class="btn-outline" style="font-size:0.88rem; padding:0.6rem 1.25rem">← Continue Shopping</a>
-          <button id="clear-cart" style="background:rgba(231,76,60,0.12);border:1px solid rgba(231,76,60,0.25);color:#e74c3c;padding:0.6rem 1.25rem;border-radius:50px;font-size:0.88rem;font-weight:600;cursor:pointer;font-family:inherit">Clear Cart</button>
-        </div>
-      </div>
-
-      <div class="cart-summary-box">
-        <div class="summary-title">Order Summary</div>
-        <div class="summary-row"><span>Subtotal (${cart.reduce((s,i)=>s+i.qty,0)} items)</span><span>${formatPrice(subtotal)}</span></div>
-        <div class="summary-row"><span>Delivery</span><span style="color:#2ed573">Free</span></div>
-        <div class="summary-total">
-          <span>Total</span>
-          <span class="summary-total-price">${formatPrice(total)}</span>
-        </div>
-        <button class="btn-checkout" id="checkout-btn">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-          Checkout via WhatsApp
-        </button>
-        <p style="color:var(--muted);font-size:0.78rem;text-align:center;margin-top:0.75rem">We'll confirm availability & arrange delivery</p>
-      </div>
-    </div>
-  `;
-
-  // Fix images
-  section.querySelectorAll('.cart-item-img').forEach(imgFallback);
-
-  // Event listeners
-  section.querySelectorAll('.qty-minus').forEach(btn => {
-    btn.addEventListener('click', () => { updateQty(btn.dataset.id, getCart().find(i=>i.id===btn.dataset.id)?.qty - 1); renderCart(); });
-  });
-  section.querySelectorAll('.qty-plus').forEach(btn => {
-    btn.addEventListener('click', () => { updateQty(btn.dataset.id, getCart().find(i=>i.id===btn.dataset.id)?.qty + 1); renderCart(); });
-  });
-  section.querySelectorAll('.cart-item-remove').forEach(btn => {
-    btn.addEventListener('click', () => { removeFromCart(btn.dataset.id); renderCart(); });
-  });
-  document.getElementById('clear-cart')?.addEventListener('click', () => {
-    if (confirm('Clear your entire cart?')) { clearCart(); renderCart(); }
-  });
-  document.getElementById('checkout-btn')?.addEventListener('click', () => {
-    whatsappOrder(getCart());
-  });
+function getCart(){ try{return JSON.parse(localStorage.getItem(CART_KEY)||'[]');}catch{return[];} }
+function saveCart(c){ localStorage.setItem(CART_KEY,JSON.stringify(c)); updateCount(); }
+function removeItem(id){ saveCart(getCart().filter(i=>i.id!==id)); render(); }
+function setQty(id,qty){
+  const cart=getCart(), item=cart.find(i=>i.id===id);
+  if(!item) return;
+  if(qty<=0){ removeItem(id); return; }
+  item.qty=Math.min(qty,item.stock||qty);
+  saveCart(cart); render();
+}
+function clearAll(){ localStorage.removeItem(CART_KEY); updateCount(); render(); }
+function fmt(p){return'₹'+Number(p).toLocaleString('en-IN');}
+function updateCount(){
+  const n=getCart().reduce((s,i)=>s+(i.qty||0),0);
+  document.querySelectorAll('.cart-count').forEach(el=>{ el.textContent=n||''; el.style.display=n>0?'flex':'none'; });
+}
+function waOrder(){
+  const cart=getCart(); if(!cart.length) return;
+  let msg=`Hi, I want to order from *King Sports Kashmir*:\n\n`,total=0;
+  cart.forEach(i=>{msg+=`• ${i.qty}x ${i.name} — ${fmt(i.price*i.qty)}\n`;total+=i.price*i.qty;});
+  msg+=`\n*Total: ${fmt(total)}*\n\nKindly confirm availability. Thank you!`;
+  window.open(WA+'?text='+encodeURIComponent(msg),'_blank');
 }
 
-renderCart();
+function render(){
+  updateCount();
+  const sec=document.getElementById('cartSection');
+  const cart=getCart();
+  if(!cart.length){
+    sec.innerHTML=`<div class="empty-cart"><div class="empty-cart-icon">🛒</div><h3>Your Cart is Empty</h3><p>Looks like you haven't added any bats yet.</p><a href="shop.html" class="btn-primary">Browse Our Collection →</a></div>`;
+    return;
+  }
+  const subtotal=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const totalItems=cart.reduce((s,i)=>s+i.qty,0);
 
-// Mobile menu
-document.getElementById('menuToggle')?.addEventListener('click', () => {
-  document.getElementById('navLinks')?.classList.toggle('open');
+  sec.innerHTML=`
+  <div class="cart-layout">
+    <div>
+      ${cart.map(item=>`
+        <div class="cart-item">
+          <img class="cart-item-img" src="${item.image||FB}" alt="${item.name}" onerror="this.src='${FB}'">
+          <div class="cart-item-info">
+            <div class="cart-item-name">${item.name}</div>
+            <div class="cart-item-price">${fmt(item.price)} each</div>
+            <div class="qty-controls">
+              <button class="qty-btn" onclick="setQty('${item.id}',${item.qty-1})">−</button>
+              <span class="qty-num">${item.qty}</span>
+              <button class="qty-btn" onclick="setQty('${item.id}',${item.qty+1})" ${item.qty>=item.stock?'disabled':''}>+</button>
+              <span style="color:var(--muted);font-size:.8rem;margin-left:.5rem">= ${fmt(item.price*item.qty)}</span>
+            </div>
+          </div>
+          <button class="cart-item-remove" onclick="removeItem('${item.id}')" title="Remove">🗑</button>
+        </div>
+      `).join('')}
+      <div style="display:flex;gap:1rem;margin-top:1rem;flex-wrap:wrap">
+        <a href="shop.html" class="btn-outline" style="font-size:.88rem;padding:.6rem 1.25rem">← Continue Shopping</a>
+        <button onclick="if(confirm('Clear cart?'))clearAll()" style="background:rgba(231,76,60,.12);border:1px solid rgba(231,76,60,.25);color:#e74c3c;padding:.6rem 1.25rem;border-radius:50px;font-size:.88rem;font-weight:600;cursor:pointer">Clear Cart</button>
+      </div>
+    </div>
+    <div class="cart-summary-box">
+      <div class="summary-title">Order Summary</div>
+      <div class="summary-row"><span>Items (${totalItems})</span><span>${fmt(subtotal)}</span></div>
+      <div class="summary-row"><span>Delivery</span><span style="color:#2ed573">Free</span></div>
+      <div class="summary-total"><span>Total</span><span class="summary-total-price">${fmt(subtotal)}</span></div>
+      <button class="btn-checkout" onclick="waOrder()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        Checkout via WhatsApp
+      </button>
+      <p style="color:var(--muted);font-size:.78rem;text-align:center;margin-top:.75rem">We'll confirm availability & arrange delivery</p>
+    </div>
+  </div>`;
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  render();
+  document.getElementById('menuToggle').onclick=()=>document.getElementById('navLinks').classList.toggle('open');
 });
 </script>
-
 </body>
 </html>

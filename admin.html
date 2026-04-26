@@ -1,167 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Panel – King Sports Kashmir</title>
-  <meta name="robots" content="noindex, nofollow">
-  <link rel="stylesheet" href="css/admin.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Admin Panel – King Sports Kashmir</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="stylesheet" href="admin.css">
 </head>
 <body>
 
-<!-- AUTH LOADING -->
-<div id="auth-loading" style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at center,#0e1f38,#060e1c)">
+<!-- LOADING SCREEN (shown while Firebase auth resolves) -->
+<div id="authLoading">
   <div style="text-align:center">
-    <div style="width:48px;height:48px;border:3px solid rgba(212,168,71,0.2);border-top-color:#D4A847;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 1rem"></div>
-    <p style="color:#8a9ab5;font-size:0.9rem">Checking authentication...</p>
+    <div class="auth-spinner"></div>
+    <p style="color:#8a9ab5;font-size:.9rem;font-family:'DM Sans',sans-serif">Loading...</p>
   </div>
 </div>
-<style>@keyframes spin{to{transform:rotate(360deg)}}</style>
 
-<!-- LOGIN SECTION -->
-<div id="login-section" style="display:none">
+<!-- LOGIN FORM -->
+<div id="loginSection" style="display:none">
   <div class="login-box">
     <div class="login-logo">👑</div>
     <h2 class="login-title">Admin Login</h2>
     <p class="login-subtitle">King Sports Kashmir Dashboard</p>
-
-    <form id="login-form">
+    <div id="loginError" style="display:none;background:rgba(231,76,60,.15);border:1px solid rgba(231,76,60,.3);border-radius:8px;padding:.75rem 1rem;margin-bottom:1rem;font-size:.85rem;color:#e74c3c;text-align:left"></div>
+    <form id="loginForm" novalidate>
       <div class="form-group">
-        <label class="form-label" for="admin-email">Email</label>
-        <input type="email" id="admin-email" class="form-input" placeholder="admin@email.com" required>
+        <label class="form-label" for="adminEmail">Email</label>
+        <input type="email" id="adminEmail" class="form-input" placeholder="admin@example.com" required autocomplete="email">
       </div>
       <div class="form-group">
-        <label class="form-label" for="admin-pass">Password</label>
-        <input type="password" id="admin-pass" class="form-input" placeholder="••••••••" required>
+        <label class="form-label" for="adminPass">Password</label>
+        <input type="password" id="adminPass" class="form-input" placeholder="••••••••" required autocomplete="current-password">
       </div>
-      <button type="submit" class="btn-login">Login to Dashboard</button>
+      <button type="submit" class="btn-login" id="loginBtn">Login to Dashboard</button>
     </form>
-
-    <p style="margin-top:1.5rem;color:var(--muted);font-size:0.8rem">
-      ← <a href="index.html" style="color:var(--gold)">Back to Website</a>
-    </p>
+    <p style="margin-top:1.5rem;color:var(--muted);font-size:.8rem">← <a href="index.html" style="color:var(--gold)">Back to Website</a></p>
   </div>
 </div>
 
-<!-- DASHBOARD SECTION -->
-<div id="dashboard-section" style="display:none">
-
+<!-- DASHBOARD -->
+<div id="dashSection" style="display:none">
   <header class="admin-header">
     <div class="admin-brand">
       <div class="admin-brand-icon">👑</div>
       <h1>King Sports Kashmir · Admin</h1>
     </div>
     <div class="admin-user">
-      <span id="admin-email-display"></span>
-      <button class="btn-logout" id="logout-btn">Logout</button>
+      <span id="adminEmailDisplay"></span>
+      <button class="btn-logout" id="logoutBtn">Logout</button>
     </div>
   </header>
 
   <main class="admin-main">
 
-    <!-- Stats -->
-    <div class="stats-row">
-      <div class="stat-card">
-        <span class="stat-num" id="stat-products">–</span>
-        <span class="stat-label">Total Products</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-num" id="stat-stock">–</span>
-        <span class="stat-label">Total Units in Stock</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-num" id="stat-value">–</span>
-        <span class="stat-label">Inventory Value</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-num">WhatsApp</span>
-        <span class="stat-label">Checkout Method</span>
-      </div>
+    <!-- STATS -->
+    <div class="admin-stats">
+      <div class="stat-card"><span class="stat-num" id="statProducts">–</span><span class="stat-label">Total Products</span></div>
+      <div class="stat-card"><span class="stat-num" id="statStock">–</span><span class="stat-label">Units in Stock</span></div>
+      <div class="stat-card"><span class="stat-num" id="statValue">–</span><span class="stat-label">Inventory Value</span></div>
+      <div class="stat-card"><span class="stat-num">WhatsApp</span><span class="stat-label">Checkout Method</span></div>
     </div>
 
-    <!-- Tabs -->
+    <!-- TABS -->
     <div class="tabs">
-      <button class="tab-btn" data-tab="add">➕ Add Product</button>
-      <button class="tab-btn active" data-tab="products">📋 Products</button>
+      <button class="tab-btn" data-tab="add" id="tabBtnAdd">➕ Add Product</button>
+      <button class="tab-btn active" data-tab="list" id="tabBtnList">📋 Products</button>
     </div>
 
-    <!-- ADD PRODUCT TAB -->
-    <div class="tab-pane" id="tab-add">
+    <!-- ADD / EDIT FORM -->
+    <div class="tab-pane" id="tabAdd">
       <div class="product-form-box">
-        <h2 class="form-title" id="form-title">➕ Add Product</h2>
-
-        <form id="product-form">
+        <div class="form-title" id="formTitle">➕ Add New Product</div>
+        <form id="productForm" novalidate>
           <div class="form-grid">
-
             <div class="form-group">
-              <label class="form-label" for="product-name">Product Name *</label>
-              <input type="text" id="product-name" class="form-input" placeholder="e.g. Street King Pro" required>
+              <label class="form-label">Product Name *</label>
+              <input type="text" id="fName" class="form-input" placeholder="e.g. Street King Pro" required>
             </div>
-
             <div class="form-group">
-              <label class="form-label" for="product-price">Price (₹) *</label>
-              <input type="number" id="product-price" class="form-input" placeholder="2999" min="0" required>
+              <label class="form-label">Price (₹) *</label>
+              <input type="number" id="fPrice" class="form-input" placeholder="2999" min="0" required>
             </div>
-
             <div class="form-group">
-              <label class="form-label" for="product-category">Category *</label>
-              <input type="text" id="product-category" class="form-input" placeholder="e.g. Kashmir Willow, Junior, English Willow" required>
+              <label class="form-label">Category *</label>
+              <input type="text" id="fCategory" class="form-input" placeholder="Kashmir Willow / English Willow / Junior">
             </div>
-
             <div class="form-group">
-              <label class="form-label" for="product-stock">Stock Quantity *</label>
-              <input type="number" id="product-stock" class="form-input" placeholder="10" min="0" required>
+              <label class="form-label">Stock Quantity *</label>
+              <input type="number" id="fStock" class="form-input" placeholder="10" min="0" required>
             </div>
-
             <div class="form-group form-full">
-              <label class="form-label" for="product-desc">Description</label>
-              <textarea id="product-desc" class="form-textarea" placeholder="Describe this bat — weight, grade, ideal for..."></textarea>
+              <label class="form-label">Description</label>
+              <textarea id="fDesc" class="form-textarea" placeholder="Describe this bat — grade, weight, ideal for..."></textarea>
             </div>
-
             <div class="form-group form-full">
-              <label class="form-label" for="product-image">Image URL</label>
-              <input type="url" id="product-image" class="form-input" placeholder="https://res.cloudinary.com/... or https://images.unsplash.com/...">
-              <img id="image-preview" class="image-preview" alt="Preview">
+              <label class="form-label">Image URL</label>
+              <input type="url" id="fImage" class="form-input" placeholder="https://res.cloudinary.com/... or https://images.unsplash.com/...">
+              <img id="imgPreview" class="image-preview" alt="Preview">
             </div>
-
             <div class="form-group">
               <label class="checkbox-label">
-                <input type="checkbox" id="product-featured">
+                <input type="checkbox" id="fFeatured">
                 ★ Mark as Featured (shows on homepage)
               </label>
             </div>
-
             <div class="form-actions form-full">
-              <button type="submit" class="btn-save">Save Product</button>
-              <button type="button" class="btn-cancel" id="cancel-edit">Cancel Edit</button>
+              <button type="submit" class="btn-save" id="saveBtn">Save Product</button>
+              <button type="button" class="btn-cancel" id="cancelBtn">Cancel</button>
             </div>
-
           </div>
         </form>
       </div>
     </div>
 
-    <!-- PRODUCTS TABLE TAB -->
-    <div class="tab-pane active" id="tab-products">
+    <!-- PRODUCT LIST -->
+    <div class="tab-pane active" id="tabList">
       <div class="table-box">
         <div class="table-header">
           <h2>All Products</h2>
-          <button class="btn-refresh" id="refresh-btn">↻ Refresh</button>
+          <button class="btn-refresh" id="refreshBtn">↻ Refresh</button>
         </div>
         <div style="overflow-x:auto">
           <table class="products-table">
             <thead>
               <tr>
-                <th>Image</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Stock</th>
-                <th>Category</th>
-                <th>Actions</th>
+                <th>Image</th><th>Name</th><th>Price</th><th>Stock</th><th>Category</th><th>Actions</th>
               </tr>
             </thead>
-            <tbody id="products-tbody">
-              <tr><td colspan="6" style="text-align:center;padding:3rem;color:var(--muted)">Loading products...</td></tr>
+            <tbody id="productsTbody">
+              <tr><td colspan="6" style="text-align:center;padding:3rem;color:var(--muted)">Loading...</td></tr>
             </tbody>
           </table>
         </div>
@@ -171,6 +139,259 @@
   </main>
 </div>
 
-<script type="module" src="js/admin.js"></script>
+<!-- TOAST -->
+<div id="toastEl" style="display:none" class="toast"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getFirestore, collection, addDoc, getDocs, updateDoc, deleteDoc, doc, serverTimestamp, orderBy, query } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+// ── Firebase Init ──────────────────────────────────────────
+const firebaseConfig = {
+  apiKey: "AIzaSyDkslLmUG4pEay16GYXB-r1hhPh2joNtNI",
+  authDomain: "king-sports-95d2a.firebaseapp.com",
+  projectId: "king-sports-95d2a",
+  storageBucket: "king-sports-95d2a.firebasestorage.app",
+  messagingSenderId: "635201700242",
+  appId: "1:635201700242:web:6b729ddff9beb9761e014b"
+};
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// ── Helpers ────────────────────────────────────────────────
+let editingId = null;
+let dashInited = false;
+
+function fmt(p){ return '₹'+Number(p).toLocaleString('en-IN'); }
+
+function showToast(msg, type='success'){
+  const t = document.getElementById('toastEl');
+  t.className = `toast toast-${type} show`;
+  t.innerHTML = `<span class="toast-icon">${type==='success'?'✓':'✕'}</span><span>${msg}</span>`;
+  t.style.display = 'flex';
+  clearTimeout(t._timer);
+  t._timer = setTimeout(()=>{ t.classList.remove('show'); setTimeout(()=>t.style.display='none',300); }, 3000);
+}
+
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function switchTab(tab){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active', b.dataset.tab===tab));
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.toggle('active', p.id==='tab'+tab.charAt(0).toUpperCase()+tab.slice(1)));
+}
+
+// ── Auth ───────────────────────────────────────────────────
+onAuthStateChanged(auth, user => {
+  document.getElementById('authLoading').style.display = 'none';
+  if(user){ showDashboard(user); }
+  else { showLogin(); }
+});
+
+function showLogin(){
+  document.getElementById('loginSection').style.display = 'flex';
+  document.getElementById('dashSection').style.display = 'none';
+  dashInited = false;
+}
+
+function showDashboard(user){
+  document.getElementById('loginSection').style.display = 'none';
+  document.getElementById('dashSection').style.display = 'block';
+  document.getElementById('adminEmailDisplay').textContent = user.email;
+  if(dashInited) return;
+  dashInited = true;
+  initDashboard();
+}
+
+// ── Login Form ─────────────────────────────────────────────
+document.getElementById('loginForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const email = document.getElementById('adminEmail').value.trim();
+  const pass  = document.getElementById('adminPass').value;
+  const btn   = document.getElementById('loginBtn');
+  const errEl = document.getElementById('loginError');
+
+  if(!email || !pass){ errEl.textContent='Please enter email and password.'; errEl.style.display='block'; return; }
+
+  btn.disabled = true;
+  btn.textContent = 'Logging in...';
+  errEl.style.display = 'none';
+
+  try {
+    await signInWithEmailAndPassword(auth, email, pass);
+  } catch(err) {
+    let msg = 'Login failed. Please try again.';
+    if(['auth/user-not-found','auth/wrong-password','auth/invalid-credential','auth/invalid-email'].includes(err.code)) msg = 'Invalid email or password.';
+    else if(err.code==='auth/too-many-requests') msg = 'Too many attempts. Try again later.';
+    else if(err.code==='auth/network-request-failed') msg = 'Network error. Check internet connection.';
+    errEl.textContent = msg;
+    errEl.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = 'Login to Dashboard';
+  }
+});
+
+// ── Dashboard Init ─────────────────────────────────────────
+function initDashboard(){
+  document.getElementById('logoutBtn').onclick = async () => {
+    await signOut(auth);
+    showToast('Logged out.');
+  };
+  document.getElementById('refreshBtn').onclick = loadProducts;
+  document.getElementById('cancelBtn').onclick = resetForm;
+
+  // Tab switching
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.onclick = () => switchTab(btn.dataset.tab);
+  });
+
+  // Image preview
+  document.getElementById('fImage').oninput = function(){
+    const pr = document.getElementById('imgPreview');
+    if(this.value.trim()){ pr.src=this.value.trim(); pr.style.display='block'; pr.onerror=()=>pr.style.display='none'; }
+    else pr.style.display='none';
+  };
+
+  // Product form
+  document.getElementById('productForm').addEventListener('submit', saveProduct);
+
+  loadProducts();
+}
+
+// ── Load Products ──────────────────────────────────────────
+async function loadProducts(){
+  const tbody = document.getElementById('productsTbody');
+  tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:2rem"><div class="spinner"></div></td></tr>';
+
+  try {
+    let snap;
+    try { snap = await getDocs(query(collection(db,'products'), orderBy('createdAt','desc'))); }
+    catch { snap = await getDocs(collection(db,'products')); }
+
+    if(snap.empty){
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:3rem;color:var(--muted)">No products yet. Click ➕ Add Product to get started!</td></tr>';
+      setStats(0,0,0);
+      return;
+    }
+
+    let totalStock=0, totalValue=0;
+    tbody.innerHTML = '';
+    snap.forEach(d => {
+      const p = {id:d.id,...d.data()};
+      totalStock += Number(p.stock)||0;
+      totalValue += (Number(p.price)||0)*(Number(p.stock)||0);
+      tbody.appendChild(makeRow(p));
+    });
+    setStats(snap.size, totalStock, totalValue);
+  } catch(e) {
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:2rem;color:#e74c3c">Error: ${e.message}</td></tr>`;
+    console.error(e);
+  }
+}
+
+function setStats(count,stock,value){
+  document.getElementById('statProducts').textContent = count;
+  document.getElementById('statStock').textContent = stock;
+  document.getElementById('statValue').textContent = fmt(value);
+}
+
+// ── Product Row ────────────────────────────────────────────
+function makeRow(p){
+  const tr = document.createElement('tr');
+  const sc = p.stock<=0?'stock-out':p.stock<=3?'stock-low':'stock-ok';
+  const imgSrc = p.image||'https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=60&q=80';
+  tr.innerHTML = `
+    <td><img src="${esc(imgSrc)}" alt="" style="width:50px;height:50px;object-fit:cover;border-radius:6px" onerror="this.src='https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=60&q=80'"></td>
+    <td><strong>${esc(p.name)}</strong>${p.featured?'&nbsp;<span class="badge-feat">★</span>':''}</td>
+    <td>${fmt(p.price)}</td>
+    <td><span class="${sc}">${esc(String(p.stock))}</span></td>
+    <td>${esc(p.category||'–')}</td>
+    <td>
+      <button class="btn-edit">Edit</button>
+      <button class="btn-delete">Delete</button>
+    </td>`;
+  tr.querySelector('.btn-edit').onclick   = () => loadEditForm(p);
+  tr.querySelector('.btn-delete').onclick = () => deleteProduct(p.id, p.name);
+  return tr;
+}
+
+// ── Edit ───────────────────────────────────────────────────
+function loadEditForm(p){
+  editingId = p.id;
+  document.getElementById('formTitle').textContent = '✏️ Edit Product';
+  document.getElementById('fName').value      = p.name||'';
+  document.getElementById('fPrice').value     = p.price||'';
+  document.getElementById('fCategory').value  = p.category||'';
+  document.getElementById('fStock').value     = p.stock||'';
+  document.getElementById('fDesc').value      = p.description||'';
+  document.getElementById('fImage').value     = p.image||'';
+  document.getElementById('fFeatured').checked= !!p.featured;
+  const pr = document.getElementById('imgPreview');
+  if(p.image){ pr.src=p.image; pr.style.display='block'; } else pr.style.display='none';
+  switchTab('add');
+  document.getElementById('tabAdd').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function resetForm(){
+  editingId = null;
+  document.getElementById('formTitle').textContent = '➕ Add New Product';
+  document.getElementById('productForm').reset();
+  document.getElementById('imgPreview').style.display='none';
+}
+
+// ── Save ───────────────────────────────────────────────────
+async function saveProduct(e){
+  e.preventDefault();
+  const btn = document.getElementById('saveBtn');
+
+  const data = {
+    name:        document.getElementById('fName').value.trim(),
+    price:       Number(document.getElementById('fPrice').value),
+    category:    document.getElementById('fCategory').value.trim(),
+    stock:       Number(document.getElementById('fStock').value),
+    description: document.getElementById('fDesc').value.trim(),
+    image:       document.getElementById('fImage').value.trim(),
+    featured:    document.getElementById('fFeatured').checked
+  };
+
+  if(!data.name){ showToast('Product name is required.','error'); return; }
+  if(isNaN(data.price)||data.price<0){ showToast('Enter a valid price.','error'); return; }
+  if(isNaN(data.stock)||data.stock<0){ showToast('Enter a valid stock quantity.','error'); return; }
+
+  btn.disabled=true; btn.textContent='Saving...';
+
+  try {
+    if(editingId){
+      await updateDoc(doc(db,'products',editingId), data);
+      showToast('Product updated!');
+    } else {
+      data.createdAt = serverTimestamp();
+      await addDoc(collection(db,'products'), data);
+      showToast('Product added!');
+    }
+    resetForm();
+    switchTab('list');
+    loadProducts();
+  } catch(err){
+    showToast('Error: '+err.message,'error');
+    console.error(err);
+  } finally {
+    btn.disabled=false; btn.textContent='Save Product';
+  }
+}
+
+// ── Delete ─────────────────────────────────────────────────
+async function deleteProduct(id, name){
+  if(!confirm(`Delete "${name}"?\n\nThis cannot be undone.`)) return;
+  try {
+    await deleteDoc(doc(db,'products',id));
+    showToast(`"${name}" deleted.`);
+    loadProducts();
+  } catch(e){
+    showToast('Delete failed: '+e.message,'error');
+  }
+}
+</script>
 </body>
 </html>

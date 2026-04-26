@@ -1,63 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About Us – King Sports Kashmir | Our Story Since 2018</title>
-  <meta name="description" content="The story of King Sports Kashmir – crafting premium Kashmir Willow cricket bats from Srinagar since 2018. Learn about our heritage, craftsmanship and passion.">
-  <meta name="keywords" content="King Sports Kashmir story, Kashmir willow cricket bats, Srinagar cricket brand, cricket bat manufacturer J&K">
-  <link rel="stylesheet" href="css/style.css">
-  <style>
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: start;
-    }
-    .about-image {
-      border-radius: 20px;
-      overflow: hidden;
-      position: relative;
-    }
-    .about-image img {
-      width: 100%;
-      height: 450px;
-      object-fit: cover;
-    }
-    .about-image-badge {
-      position: absolute;
-      bottom: 2rem; left: 2rem;
-      background: rgba(11,22,40,0.92);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1rem 1.5rem;
-      backdrop-filter: blur(10px);
-    }
-    .about-text h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.5rem;
-      font-weight: 700;
-      line-height: 1.2;
-      margin-bottom: 1.5rem;
-    }
-    .about-text p {
-      color: rgba(255,255,255,0.75);
-      line-height: 1.8;
-      font-size: 0.97rem;
-      margin-bottom: 1.25rem;
-    }
-    @media (max-width: 768px) {
-      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
-      .about-image img { height: 280px; }
-    }
-  </style>
-  <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"Organization","name":"King Sports Kashmir","foundingDate":"2018","address":{"@type":"PostalAddress","addressLocality":"Srinagar","addressRegion":"Jammu & Kashmir","addressCountry":"IN"},"telephone":"+917006321949","email":"kingsportsks844@gmail.com","sameAs":["https://instagram.com/kingsports_ks"]}
-  </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>About Us – King Sports Kashmir | Our Story Since 2018</title>
+<meta name="description" content="The story of King Sports Kashmir – crafting premium Kashmir Willow cricket bats from Srinagar since 2018.">
+<meta name="keywords" content="King Sports Kashmir story, Kashmir willow cricket bats, Srinagar cricket brand">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<nav class="navbar scrolled">
+<nav class="navbar scrolled" id="navbar">
   <a href="index.html" class="nav-brand">
     <div class="brand-crown">👑</div>
     <div class="brand-name">King Sports <span>Kashmir</span></div>
@@ -67,12 +20,12 @@
     <li><a href="shop.html">Shop</a></li>
     <li><a href="about.html" class="active">About</a></li>
     <li><a href="contact.html">Contact</a></li>
-    <li><a href="cart.html" class="nav-cart">🛒 Cart <span class="cart-count" id="cartCount">0</span></a></li>
+    <li><a href="cart.html" class="nav-cart">🛒 Cart<span class="cart-count" id="cartCount"></span></a></li>
   </ul>
   <button class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></button>
 </nav>
 
-<div class="page-hero" style="background: linear-gradient(135deg, #060e1c, #0a1a30)">
+<div class="page-hero">
   <span class="section-label">Our Story</span>
   <h1>Born in <span style="color:var(--gold)">Kashmir</span></h1>
   <p>Six years of crafting cricket bats with the soul of the valley</p>
@@ -83,16 +36,16 @@
   <div class="about-grid">
     <div class="about-image">
       <img src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=800&q=80" alt="Kashmir Willow Cricket Bats">
-      <div class="about-image-badge">
-        <span class="hero-stat-num" style="font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--gold);display:block">2018</span>
-        <span style="font-size:0.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em">Est. in Srinagar</span>
+      <div style="position:absolute;bottom:2rem;left:2rem;background:rgba(11,22,40,.92);border:1px solid var(--border);border-radius:12px;padding:1rem 1.5rem;backdrop-filter:blur(10px)">
+        <span style="font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--gold);display:block;font-weight:700">2018</span>
+        <span style="font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em">Est. in Srinagar</span>
       </div>
     </div>
     <div class="about-text">
       <h2>The <span style="color:var(--gold)">King Sports</span> Story</h2>
       <p>King Sports Kashmir was born in 2018 in the heart of Srinagar, Jammu & Kashmir. What started as a passion for cricket and a deep respect for Kashmir's rich willow tradition has grown into one of the most trusted cricket bat brands in the region.</p>
       <p>Our founder, growing up in Srinagar, watched the valley's legendary willow craftsmen pour their skill into every bat. That heritage inspired King Sports Kashmir — a brand that honors the artistry of Kashmir while delivering bats that perform at the highest level.</p>
-      <p>We believe every cricketer, from the gully to the ground, deserves a bat that feels alive in their hands. That's why we source only the finest Kashmir Willow, shape it with traditional techniques, and finish each bat with meticulous care.</p>
+      <p>We believe every cricketer deserves a bat that feels alive in their hands. That's why we source only the finest Kashmir Willow, shape it with traditional techniques, and finish each bat with meticulous care.</p>
       <div class="hero-actions" style="margin-top:2rem">
         <a href="shop.html" class="btn-primary">Shop Our Bats →</a>
         <a href="https://wa.me/917006321949" target="_blank" class="btn-outline">WhatsApp Us</a>
@@ -103,103 +56,40 @@
 
 <!-- STATS -->
 <div class="section-divider">
-  <div style="max-width:900px;margin:0 auto;padding:4rem 2rem 0">
-    <div class="section-header" style="margin-bottom:3rem">
-      <span class="section-label">By the Numbers</span>
-      <h2 class="section-title">Our Journey in Numbers</h2>
-    </div>
+  <div style="max-width:900px;margin:0 auto">
+    <div class="section-header" style="margin-bottom:3rem"><span class="section-label">By the Numbers</span><h2 class="section-title">Our Journey in Numbers</h2></div>
     <div class="stats-row">
-      <div class="stat-box">
-        <span class="stat-num">500+</span>
-        <span class="stat-label">Bats Crafted</span>
-      </div>
-      <div class="stat-box">
-        <span class="stat-num">6+</span>
-        <span class="stat-label">Years Experience</span>
-      </div>
-      <div class="stat-box">
-        <span class="stat-num">100%</span>
-        <span class="stat-label">Kashmir Willow</span>
-      </div>
-      <div class="stat-box">
-        <span class="stat-num">J&K</span>
-        <span class="stat-label">Pan-Kashmir Delivery</span>
-      </div>
+      <div class="stat-box"><span class="stat-num">500+</span><span class="stat-label">Bats Crafted</span></div>
+      <div class="stat-box"><span class="stat-num">6+</span><span class="stat-label">Years Experience</span></div>
+      <div class="stat-box"><span class="stat-num">100%</span><span class="stat-label">Kashmir Willow</span></div>
+      <div class="stat-box"><span class="stat-num">J&K</span><span class="stat-label">Pan-Kashmir Delivery</span></div>
     </div>
   </div>
 </div>
 
 <!-- TIMELINE -->
 <section class="section">
-  <div class="section-header">
-    <span class="section-label">Our Growth</span>
-    <h2 class="section-title">The King Sports Timeline</h2>
-  </div>
-  <div style="max-width:600px; margin:0 auto">
+  <div class="section-header"><span class="section-label">Our Growth</span><h2 class="section-title">The King Sports Timeline</h2></div>
+  <div style="max-width:600px;margin:0 auto">
     <div class="timeline">
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-year">2018</div>
-        <div class="timeline-title">The Beginning</div>
-        <p class="timeline-text">King Sports Kashmir is founded in Srinagar with a simple mission: bring premium handcrafted cricket bats to every cricketer in J&K.</p>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-year">2019 – 2020</div>
-        <div class="timeline-title">Building the Craft</div>
-        <p class="timeline-text">We refined our willow selection process, partnering with trusted suppliers in the Kashmir Valley to source the finest Grade A willow.</p>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-year">2021</div>
-        <div class="timeline-title">Going Online</div>
-        <p class="timeline-text">Launched our WhatsApp ordering system, making it easier for cricketers across J&K to order directly from their phones.</p>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-year">2022 – 2023</div>
-        <div class="timeline-title">Regional Recognition</div>
-        <p class="timeline-text">Crossed 300+ bats sold, earning the trust of club cricketers, schools, and academies across Srinagar, Baramulla, and Anantnag.</p>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-year">2024</div>
-        <div class="timeline-title">The King's Era</div>
-        <p class="timeline-text">500+ bats crafted, new product lines launched, and a full eCommerce store to serve cricketers everywhere. The story continues.</p>
-      </div>
+      <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-year">2018</div><div class="timeline-title">The Beginning</div><p class="timeline-text">King Sports Kashmir founded in Srinagar with a mission: bring premium handcrafted cricket bats to every cricketer in J&K.</p></div>
+      <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-year">2019 – 2020</div><div class="timeline-title">Building the Craft</div><p class="timeline-text">Refined our willow selection, partnering with trusted suppliers in the Kashmir Valley to source the finest Grade A willow.</p></div>
+      <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-year">2021</div><div class="timeline-title">Going Online</div><p class="timeline-text">Launched our WhatsApp ordering system, making it easier for cricketers across J&K to order directly from their phones.</p></div>
+      <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-year">2022 – 2023</div><div class="timeline-title">Regional Recognition</div><p class="timeline-text">Crossed 300+ bats sold, earning trust of clubs, schools, and academies across Srinagar, Baramulla, and Anantnag.</p></div>
+      <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-year">2024</div><div class="timeline-title">The King's Era</div><p class="timeline-text">500+ bats crafted, new product lines, and a full eCommerce store to serve cricketers everywhere. The story continues.</p></div>
     </div>
   </div>
 </section>
 
 <!-- CRAFTSMANSHIP -->
 <div class="section-divider">
-  <div class="section" style="padding-top:4rem;padding-bottom:4rem">
-    <div class="section-header">
-      <span class="section-label">Our Process</span>
-      <h2 class="section-title">Kashmir Willow Craftsmanship</h2>
-      <p class="section-desc">Every King Sports bat goes through a careful process to ensure it performs at the highest level.</p>
-    </div>
+  <div style="max-width:1200px;margin:0 auto;padding:4rem 2rem">
+    <div class="section-header"><span class="section-label">Our Process</span><h2 class="section-title">Kashmir Willow Craftsmanship</h2><p class="section-desc">Every King Sports bat goes through a careful process to ensure it performs at the highest level.</p></div>
     <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon">🌲</div>
-        <h3 class="feature-title">Willow Selection</h3>
-        <p class="feature-text">We hand-select each willow cleft for grain quality, density, and performance potential. Only the best make it into a King Sports bat.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🪵</div>
-        <h3 class="feature-title">Shaping & Pressing</h3>
-        <p class="feature-text">Our craftsmen shape each bat by hand, ensuring the perfect profile, edges, and spine for maximum power and durability.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🔩</div>
-        <h3 class="feature-title">Handle & Balance</h3>
-        <p class="feature-text">Premium cane handles wrapped in high-quality grips provide the right balance and feel for every playing style.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">✨</div>
-        <h3 class="feature-title">Finishing</h3>
-        <p class="feature-text">Each bat is sanded smooth, oiled, and finished with our King Sports stickers. Ready to perform from the first ball.</p>
-      </div>
+      <div class="feature-card"><div class="feature-icon">🌲</div><h3 class="feature-title">Willow Selection</h3><p class="feature-text">We hand-select each willow cleft for grain quality, density, and performance potential. Only the best make it into a King Sports bat.</p></div>
+      <div class="feature-card"><div class="feature-icon">🪵</div><h3 class="feature-title">Shaping & Pressing</h3><p class="feature-text">Our craftsmen shape each bat by hand, ensuring the perfect profile, edges, and spine for maximum power and durability.</p></div>
+      <div class="feature-card"><div class="feature-icon">🔩</div><h3 class="feature-title">Handle & Balance</h3><p class="feature-text">Premium cane handles wrapped in high-quality grips provide the right balance and feel for every playing style.</p></div>
+      <div class="feature-card"><div class="feature-icon">✨</div><h3 class="feature-title">Finishing</h3><p class="feature-text">Each bat is sanded smooth, oiled, and finished with our King Sports stickers. Ready to perform from the first ball.</p></div>
     </div>
   </div>
 </div>
@@ -217,44 +107,22 @@
 
 <footer>
   <div class="footer-grid">
-    <div>
-      <div class="nav-brand"><div class="brand-crown">👑</div><div class="brand-name">King Sports <span>Kashmir</span></div></div>
-      <p class="footer-brand-desc">Premium handcrafted Kashmir Willow cricket bats from Srinagar, J&K. Trusted by cricketers since 2018.</p>
-    </div>
-    <div>
-      <h4 class="footer-heading">Quick Links</h4>
-      <ul class="footer-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="shop.html">Shop</a></li>
-        <li><a href="about.html">About Us</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
-    </div>
-    <div>
-      <h4 class="footer-heading">Contact Us</h4>
-      <div class="footer-contact-item">📍 Srinagar, Jammu & Kashmir</div>
-      <div class="footer-contact-item">📞 <a href="tel:+917006321949">+91 70063 21949</a></div>
-      <div class="footer-contact-item">✉️ <a href="mailto:kingsportsks844@gmail.com">kingsportsks844@gmail.com</a></div>
-      <div class="footer-social" style="margin-top:1rem">
-        <a href="https://instagram.com/kingsports_ks" target="_blank" class="social-link">📷</a>
-        <a href="https://wa.me/917006321949" target="_blank" class="social-link">💬</a>
-      </div>
-    </div>
+    <div><div class="nav-brand"><div class="brand-crown">👑</div><div class="brand-name">King Sports <span>Kashmir</span></div></div><p class="footer-brand-desc">Premium handcrafted Kashmir Willow cricket bats from Srinagar, J&K. Trusted by cricketers since 2018.</p></div>
+    <div><h4 class="footer-heading">Quick Links</h4><ul class="footer-links"><li><a href="index.html">Home</a></li><li><a href="shop.html">Shop</a></li><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div><h4 class="footer-heading">Contact Us</h4><div class="footer-contact-item">📍 Srinagar, Jammu & Kashmir</div><div class="footer-contact-item">📞 <a href="tel:+917006321949">+91 70063 21949</a></div><div class="footer-contact-item">✉️ <a href="mailto:kingsportsks844@gmail.com">kingsportsks844@gmail.com</a></div><div class="footer-social" style="margin-top:1rem"><a href="https://instagram.com/kingsports_ks" target="_blank" class="social-link">📷</a><a href="https://wa.me/917006321949" target="_blank" class="social-link">💬</a></div></div>
   </div>
-  <div class="footer-bottom">
-    <span>© 2024 King Sports Kashmir. All rights reserved.</span>
-    <span>Made with ❤️ in Srinagar, J&K</span>
-  </div>
+  <div class="footer-bottom"><span>© 2024 King Sports Kashmir.</span><span>Made with ❤️ in Srinagar, J&K</span></div>
 </footer>
 
-<script type="module">
-import { updateCartCount } from './js/utils.js';
-updateCartCount();
-document.getElementById('menuToggle')?.addEventListener('click', () => {
-  document.getElementById('navLinks')?.classList.toggle('open');
-});
-window.addEventListener('scroll', () => {
-  document.querySelector('.navbar')?.classList.toggle('scrolled', window.scrollY > 50);
+<script>
+function updateCount(){
+  const n=(()=>{try{return JSON.parse(localStorage.getItem('ksk_cart')||'[]');}catch{return[];}})().reduce((s,i)=>s+(i.qty||0),0);
+  document.querySelectorAll('.cart-count').forEach(el=>{el.textContent=n||'';el.style.display=n>0?'flex':'none';});
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  updateCount();
+  document.getElementById('menuToggle').onclick=()=>document.getElementById('navLinks').classList.toggle('open');
+  window.addEventListener('scroll',()=>document.getElementById('navbar').classList.toggle('scrolled',scrollY>50));
 });
 </script>
 </body>
