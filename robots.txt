@@ -1,6 +1,40 @@
+# ============================================================
+# robots.txt — King Sports Kashmir
+# https://kingsportsks.com
+# ============================================================
+
 User-agent: *
 Allow: /
-
 Disallow: /admin.html
+Disallow: /dashboard.html
+Disallow: /cart.html
+Disallow: /js/
+Disallow: /css/
+Disallow: /images/
 
 Sitemap: https://kingsportsks.com/sitemap.xml
+
+# ── Google ────────────────────────────────────────────────────
+User-agent: Googlebot
+Allow: /
+Disallow: /admin.html
+Disallow: /dashboard.html
+
+# ── Bing ──────────────────────────────────────────────────────
+User-agent: Bingbot
+Allow: /
+Disallow: /admin.html
+Disallow: /dashboard.html
+
+# ── Block spam bots ───────────────────────────────────────────
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
