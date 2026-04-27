@@ -6,37 +6,65 @@
 
   <url>
     <loc>https://kingsportsks.com/</loc>
-    <lastmod>2024-12-01</lastmod>
+    <lastmod>2025-04-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
     <loc>https://kingsportsks.com/shop.html</loc>
-    <lastmod>2024-12-01</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
+    <lastmod>2025-04-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+
+  <url>
+    <loc>https://kingsportsks.com/shop.html?cat=Kashmir+Willow</loc>
+    <lastmod>2025-04-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://kingsportsks.com/shop.html?cat=English+Willow</loc>
+    <lastmod>2025-04-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://kingsportsks.com/shop.html?cat=Tennis+Bats</loc>
+    <lastmod>2025-04-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://kingsportsks.com/shop.html?cat=Kids+Bats</loc>
+    <lastmod>2025-04-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://kingsportsks.com/shop.html?cat=Accessories</loc>
+    <lastmod>2025-04-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
   </url>
 
   <url>
     <loc>https://kingsportsks.com/about.html</loc>
-    <lastmod>2024-12-01</lastmod>
+    <lastmod>2025-04-27</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.70</priority>
   </url>
 
   <url>
     <loc>https://kingsportsks.com/contact.html</loc>
-    <lastmod>2024-12-01</lastmod>
+    <lastmod>2025-04-27</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://kingsportsks.com/cart.html</loc>
-    <lastmod>2024-12-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
+    <priority>0.75</priority>
   </url>
 
 </urlset>
